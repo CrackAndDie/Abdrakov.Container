@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Abdrakov.Container.PrismAdapter</id>
+    <version>1.0.1</version>
+    <title>Abdrakov.Container.PrismAdapter</title>
+    <authors>crackanddie</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">NUGET_LICENSE.txt</license>
+    <readme>docs\NUGET_README.md</readme>
+    <iconUrl>https://raw.githubusercontent.com/CADindustries/container/main/logos/AbdrakovSolutions.png</iconUrl>
+    <projectUrl>https://github.com/CrackAndDie/Abdrakov.Container</projectUrl>
+    <description>A lightweight container with adapter for Prism</description>
+    <releaseNotes>-</releaseNotes>
+    <copyright>Copyright ©  2023</copyright>
+    <tags>Prism Container Injection DI</tags>
+    <dependencies>
+      <dependency id="Prism.Wpf" version="8.1.97" />
+      <dependency id="Prism.Unity" version="8.1.97" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="NUGET_README.md" target="docs\" />
+    <file src="NUGET_LICENSE.txt" target="" />
+  </files>
+</package>
