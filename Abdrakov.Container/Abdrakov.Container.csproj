@@ -3,7 +3,7 @@
   <PropertyGroup>
 	  <RootNamespace>Abdrakov.Container</RootNamespace>
 	  <AssemblyName>Abdrakov.Container</AssemblyName>
-	  <TargetFrameworks>netstandard2.0;net6.0;net7.0</TargetFrameworks>
+	  <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
 	  <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);net472</TargetFrameworks>
   </PropertyGroup>
 
