@@ -12,6 +12,11 @@ namespace Abdrakov.Container.Extensions
         {
             if (registration.Instance != null && registration.RegistrationType == RegistrationType.Instance)
             {
+                // all the injections should be resolved in the instance on its first resolve
+                if (registration.IsFirstResolve)
+                {
+                    container.InstanceCreator.ResolveInjections(registration.Instance, container);
+                }
                 return registration.Instance;
             }
 

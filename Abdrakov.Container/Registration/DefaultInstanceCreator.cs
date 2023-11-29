@@ -14,6 +14,12 @@ namespace Abdrakov.Container.Registration
         public object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container)
         {
             var instance = registration.MappedToType.GetNormalConstructor()?.Invoke(registration.InjectionMembers?.Select(x => container.Resolve(x)).ToArray());
+            ResolveInjections(instance, container);
+            return instance;
+        }
+
+        public void ResolveInjections(object instance, IAbdrakovContainer container)
+        {
             // fields
             foreach (var f in instance.GetType().GetTypeInfo().DeclaredFields)
             {
@@ -34,7 +40,6 @@ namespace Abdrakov.Container.Registration
                     p.SetValue(instance, dep, null);
                 }
             }
-            return instance;
         }
     }
 }

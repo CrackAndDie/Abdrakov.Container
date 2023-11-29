@@ -10,13 +10,11 @@ namespace Abdrakov.Container.Interfaces
     public interface IContainerRegistration
     {
         Type RegisteredType { get; }
-
         Type MappedToType { get; }
-
         object Instance { get; set; }
 
         Type[] InjectionMembers { get; set; }
-
         RegistrationType RegistrationType { get; }
+        bool IsFirstResolve { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace Abdrakov.Container.Interfaces
     public interface IInstanceCreator
     {
         object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container);
+        void ResolveInjections(object instance, IAbdrakovContainer container);
     }
 }

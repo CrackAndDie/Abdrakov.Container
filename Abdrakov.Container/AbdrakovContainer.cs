@@ -91,6 +91,7 @@ namespace Abdrakov.Container
                             return registration.GetFunc();
                         }
                 }
+                registration.IsFirstResolve = false;
             }
             // try to create it by my own
             if (type.IsClass)
