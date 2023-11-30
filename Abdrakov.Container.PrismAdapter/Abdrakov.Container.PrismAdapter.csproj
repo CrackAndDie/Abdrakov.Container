@@ -12,10 +12,10 @@
 		<PackageDescription>A lightweight container with adapter for Prism</PackageDescription>
 		<Copyright>Copyright ©  2023</Copyright>
 		<PackageTags>Prism Container Injection DI</PackageTags>
-		<PackageVersion>1.0.3</PackageVersion>
+		<PackageVersion>1.0.4</PackageVersion>
 		<PackageProjectUrl>https://github.com/CrackAndDie/Abdrakov.Container</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/CrackAndDie/Abdrakov.Container</RepositoryUrl>
-		<PackageIconUrl>https://raw.githubusercontent.com/CADindustries/container/main/logos/baguette-custom.png</PackageIconUrl>
+		<PackageIconUrl>https://raw.githubusercontent.com/CADindustries/container/main/logos/package-custom.png</PackageIconUrl>
 		<PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
 		<PackageLicenseFile>NUGET_LICENSE.txt</PackageLicenseFile>
 	</PropertyGroup>
