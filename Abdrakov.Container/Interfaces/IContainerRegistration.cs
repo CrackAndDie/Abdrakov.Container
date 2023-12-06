@@ -15,6 +15,5 @@ namespace Abdrakov.Container.Interfaces
 
         Type[] InjectionMembers { get; set; }
         RegistrationType RegistrationType { get; }
-        bool IsFirstResolve { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace Abdrakov.Container.Interfaces
     {
         object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container);
         void ResolveInjections(object instance, IAbdrakovContainer container);
+        bool RequiresInjections(object instance);
     }
 }

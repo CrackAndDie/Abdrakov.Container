@@ -19,8 +19,6 @@ namespace Abdrakov.Container.Registration
 
         public RegistrationType RegistrationType { get; set; }
 
-        public bool IsFirstResolve { get; set; } = true;
-
         public override string ToString()
         {
             return $"Reg: {RegisteredType}, Map: {MappedToType}, Type: {RegistrationType}";

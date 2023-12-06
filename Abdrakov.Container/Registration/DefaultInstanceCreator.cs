@@ -2,6 +2,7 @@
 using Abdrakov.Container.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -26,8 +27,12 @@ namespace Abdrakov.Container.Registration
                 var attrs = f.GetCustomAttributes(typeof(InjectionAttribute), false);
                 if (attrs.Length > 0)
                 {
-                    var dep = container.Resolve(f.FieldType);
+                    // recursion problem solver
+                    if (f.GetValue(instance) != null)
+                        continue;
+                    var dep = container.Resolve(f.FieldType, false);
                     f.SetValue(instance, dep);
+                    container.ResolveInjections(f.FieldType);
                 }
             }
             // properties
@@ -36,10 +41,39 @@ namespace Abdrakov.Container.Registration
                 var attrs = p.GetCustomAttributes(typeof(InjectionAttribute), false);
                 if (attrs.Length > 0)
                 {
-                    var dep = container.Resolve(p.PropertyType);
+                    // recursion problem solver
+                    if (p.GetValue(instance) != null)
+                        continue;
+                    var dep = container.Resolve(p.PropertyType, false);
                     p.SetValue(instance, dep, null);
+                    container.ResolveInjections(p.PropertyType);
                 }
             }
+        }
+
+        public bool RequiresInjections(object instance)
+        {
+            // fields
+            foreach (var f in instance.GetType().GetTypeInfo().DeclaredFields)
+            {
+                var attrs = f.GetCustomAttributes(typeof(InjectionAttribute), false);
+                if (attrs.Length > 0)
+                {
+                    if (f.GetValue(instance) == null)
+                        return true;
+                }
+            }
+            // properties
+            foreach (var p in instance.GetType().GetTypeInfo().DeclaredProperties)
+            {
+                var attrs = p.GetCustomAttributes(typeof(InjectionAttribute), false);
+                if (attrs.Length > 0)
+                {
+                    if (p.GetValue(instance) == null)
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }

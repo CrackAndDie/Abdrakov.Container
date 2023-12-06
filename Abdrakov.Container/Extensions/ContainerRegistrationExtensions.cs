@@ -8,12 +8,12 @@ namespace Abdrakov.Container.Extensions
 {
     public static class ContainerRegistrationExtensions
     {
-        public static object GetInstance(this IContainerRegistration registration, IAbdrakovContainer container)
+        public static object GetInstance(this IContainerRegistration registration, IAbdrakovContainer container, bool withInjections = true)
         {
             if (registration.Instance != null && registration.RegistrationType == RegistrationType.Instance)
             {
                 // all the injections should be resolved in the instance on its first resolve
-                if (registration.IsFirstResolve)
+                if (container.InstanceCreator.RequiresInjections(registration.Instance) && withInjections)
                 {
                     container.InstanceCreator.ResolveInjections(registration.Instance, container);
                 }

@@ -75,7 +75,7 @@ namespace Abdrakov.Container
             return this;
         }
 
-        public object Resolve(Type type)
+        public object Resolve(Type type, bool withInjections = true)
         {
             if (IsRegistered(type, out IContainerRegistration registration))
             {
@@ -84,14 +84,13 @@ namespace Abdrakov.Container
                     case RegistrationType.Type:
                     case RegistrationType.Instance:
                         {
-                            return registration.GetInstance(this);
+                            return registration.GetInstance(this, withInjections);
                         }
                     case RegistrationType.Func:
                         {
                             return registration.GetFunc();
                         }
                 }
-                registration.IsFirstResolve = false;
             }
             // try to create it by my own
             if (type.IsClass)
@@ -109,6 +108,27 @@ namespace Abdrakov.Container
                 return tempRegistration.GetInstance(this);
             }
             return null;
+        }
+
+        public void ResolveInjections(Type type)
+        {
+            if (IsRegistered(type, out IContainerRegistration registration))
+            {
+                switch (registration.RegistrationType)
+                {
+                    case RegistrationType.Type:
+                    case RegistrationType.Instance:
+                        {
+                            registration.GetInstance(this, true);
+                            break;
+                        }
+                    case RegistrationType.Func:
+                        {
+                            registration.GetFunc();
+                            break;
+                        }
+                }
+            }
         }
 
         public void Dispose()
