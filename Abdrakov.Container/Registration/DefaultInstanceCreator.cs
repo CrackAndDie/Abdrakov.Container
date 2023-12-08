@@ -12,10 +12,11 @@ namespace Abdrakov.Container.Registration
 {
     public class DefaultInstanceCreator : IInstanceCreator
     {
-        public object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container)
+        public object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container, bool withInjections = true)
         {
             var instance = registration.MappedToType.GetNormalConstructor()?.Invoke(registration.InjectionMembers?.Select(x => container.Resolve(x)).ToArray());
-            ResolveInjections(instance, container);
+            if (withInjections && RequiresInjections(instance))
+                ResolveInjections(instance, container);
             return instance;
         }
 

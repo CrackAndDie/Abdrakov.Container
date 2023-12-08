@@ -20,7 +20,7 @@ namespace Abdrakov.Container.Extensions
                 return registration.Instance;
             }
 
-            var instance = container.InstanceCreator.CreateInstance(registration, container);
+            var instance = container.InstanceCreator.CreateInstance(registration, container, withInjections);
             if (registration.RegistrationType == RegistrationType.Instance)
             {
                 registration.Instance = instance;

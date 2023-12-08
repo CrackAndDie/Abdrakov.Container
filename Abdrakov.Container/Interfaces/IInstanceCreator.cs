@@ -8,7 +8,7 @@ namespace Abdrakov.Container.Interfaces
 {
     public interface IInstanceCreator
     {
-        object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container);
+        object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container, bool withInjections = true);
         void ResolveInjections(object instance, IAbdrakovContainer container);
         bool RequiresInjections(object instance);
     }
