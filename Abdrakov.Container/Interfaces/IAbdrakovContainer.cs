@@ -22,7 +22,8 @@ namespace Abdrakov.Container.Interfaces
 
         bool IsRegistered(Type type);
 
-        object Resolve(Type type, bool withInjections = true);
+        object Resolve(Type type);
+        object Resolve(Type type, bool withInjections);
         void ResolveInjections(Type type);
     }
 }

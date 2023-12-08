@@ -75,7 +75,12 @@ namespace Abdrakov.Container
             return this;
         }
 
-        public object Resolve(Type type, bool withInjections = true)
+        public object Resolve(Type type)
+        {
+            return Resolve(type, true);
+        }
+
+        public object Resolve(Type type, bool withInjections)
         {
             if (IsRegistered(type, out IContainerRegistration registration))
             {
