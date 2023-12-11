@@ -53,10 +53,9 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
 
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
         public Type GetRegistrationType(string key)
         {
-            throw new NotImplementedException("Abdrakov.Container does not provide registrations/resolves by string name");
+            return Instance.Registrations.FirstOrDefault(x => x.Name == key)?.GetType();
         }
 
         public Type GetRegistrationType(Type serviceType)
@@ -70,10 +69,9 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
             return Instance.IsRegistered(type);
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
         public bool IsRegistered(Type type, string name)
         {
-            return Instance.IsRegistered(type);
+            return Instance.IsRegistered(type, name);
         }
 
         public IContainerRegistry Register(Type from, Type to)
@@ -82,10 +80,10 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
             return this;
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
         public IContainerRegistry Register(Type from, Type to, string name)
         {
-            return Register(from, to);
+            Instance.RegisterType(from, to, name);
+            return this;
         }
 
         public IContainerRegistry Register(Type type, Func<object> factoryMethod)
@@ -106,10 +104,9 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
             return this;
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
         public IContainerRegistry RegisterInstance(Type type, object instance, string name)
         {
-            Instance.RegisterInstance(type, instance);
+            Instance.RegisterInstance(type, instance, name);
             return this;
         }
 
@@ -149,10 +146,9 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
             return this;
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
         public IContainerRegistry RegisterSingleton(Type from, Type to, string name)
         {
-            Instance.RegisterType(from, to, isSingleton: true);
+            Instance.RegisterType(from, to, name, isSingleton: true);
             return this;
         }
 
@@ -179,16 +175,15 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
             return Instance.Resolve(type);
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
         public object Resolve(Type type, string name)
         {
-            return Instance.Resolve(type);
+            return Instance.Resolve(type, name, true);
         }
 
-        [Obsolete("Abdrakov.Container does not provide registrations/resolves by string name")]
+        [Obsolete("Abdrakov.Container does not provide difficult registrations")]
         public object Resolve(Type type, string name, params (Type Type, object Instance)[] parameters)
         {
-            return Instance.Resolve(type);
+            return Instance.Resolve(type, name, true);
         }
 
         /// <summary>
@@ -248,11 +243,11 @@ namespace Abdrakov.Container.AvaloniaPrismAdapter
                 try
                 {
                     // Unity will simply return a new object() for unregistered Views
-                    if (!Container.IsRegistered(type))
+                    if (!Container.IsRegistered(type, name))
                         throw new KeyNotFoundException($"No registered type {type.Name} with the key {name}.");
 
                     // var overrides = parameters.Select(p => new DependencyOverride(p.Type, p.Instance)).ToArray();
-                    return Container.Resolve(type);
+                    return Container.Resolve(type, name, true);
                 }
                 catch (Exception ex)
                 {

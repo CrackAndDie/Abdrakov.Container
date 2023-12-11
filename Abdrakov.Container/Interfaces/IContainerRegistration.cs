@@ -13,6 +13,8 @@ namespace Abdrakov.Container.Interfaces
         Type MappedToType { get; }
         object Instance { get; set; }
 
+        string Name { get; set; }
+
         Type[] InjectionMembers { get; set; }
         RegistrationType RegistrationType { get; }
     }

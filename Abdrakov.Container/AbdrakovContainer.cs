@@ -28,7 +28,18 @@ namespace Abdrakov.Container
 
         public bool IsRegistered(Type type, out IContainerRegistration registration)
         {
-            registration = Registrations.FirstOrDefault(x => x.RegisteredType == type);
+            return IsRegistered(type, string.Empty, out registration);
+        }
+
+        public bool IsRegistered(Type type, string name)
+        {
+            return IsRegistered(type, name, out IContainerRegistration _);
+        }
+
+        public bool IsRegistered(Type type, string name, out IContainerRegistration registration)
+        {
+            var regs = string.IsNullOrWhiteSpace(name) ? Registrations : Registrations.Where(x => x.Name == name);
+            registration = regs.FirstOrDefault(x => x.RegisteredType == type);
             return registration != null;
         }
 
@@ -47,18 +58,29 @@ namespace Abdrakov.Container
 
         public IAbdrakovContainer RegisterInstance(Type type, object instance)
         {
+            return RegisterInstance(type, instance, string.Empty);
+        }
+
+        public IAbdrakovContainer RegisterInstance(Type type, object instance, string name)
+        {
             var registration = new ContainerRegistration()
             {
                 RegisteredType = type,
                 MappedToType = instance.GetType(),
                 Instance = instance,
                 RegistrationType = RegistrationType.Instance,
+                Name = name,
             };
             AddOrReplace(registration);
             return this;
         }
 
         public IAbdrakovContainer RegisterType(Type registeredType, Type mappedToType, bool isSingleton = false)
+        {
+            return RegisterType(registeredType, mappedToType, string.Empty, isSingleton);
+        }
+
+        public IAbdrakovContainer RegisterType(Type registeredType, Type mappedToType, string name, bool isSingleton = false)
         {
             var parametrizedConstructor = mappedToType.GetNormalConstructor();
             Type[] injectionMembers = parametrizedConstructor.GetParameters().Select(x => x.ParameterType).ToArray();
@@ -70,6 +92,7 @@ namespace Abdrakov.Container
                 Instance = null,
                 RegistrationType = isSingleton ? RegistrationType.Instance : RegistrationType.Type,
                 InjectionMembers = injectionMembers,
+                Name = name,
             };
             AddOrReplace(registration);
             return this;
@@ -82,9 +105,14 @@ namespace Abdrakov.Container
 
         public object Resolve(Type type, bool withInjections)
         {
-            if (IsRegistered(type, out IContainerRegistration registration))
+            return Resolve(type, string.Empty, withInjections);
+        }
+
+        public object Resolve(Type type, string name, bool withInjections)
+        {
+            if (IsRegistered(type, name, out IContainerRegistration registration))
             {
-                switch (registration.RegistrationType) 
+                switch (registration.RegistrationType)
                 {
                     case RegistrationType.Type:
                     case RegistrationType.Instance:
@@ -97,6 +125,13 @@ namespace Abdrakov.Container
                         }
                 }
             }
+
+            // try to resolve with empty name
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                return Resolve(type, string.Empty, withInjections);
+            }
+
             // try to create it by my own
             if (type.IsClass)
             {
@@ -141,11 +176,11 @@ namespace Abdrakov.Container
             
         }
 
-        private int IndexOfType(Type type)
+        private int IndexOfReg(IContainerRegistration registration)
         {
-            if (IsRegistered(type))
+            if (IsRegistered(registration.RegisteredType, registration.Name))
             {
-                int index = Registrations.Select(x => x.RegisteredType).ToList().IndexOf(type);
+                int index = Registrations.Select(x => (x.RegisteredType, x.Name)).ToList().IndexOf((registration.RegisteredType, registration.Name));
                 return index;
             }
             return -1;
@@ -154,7 +189,7 @@ namespace Abdrakov.Container
         private void AddOrReplace(IContainerRegistration registration)
         {
             int ind;
-            if ((ind = IndexOfType(registration.RegisteredType)) != -1)
+            if ((ind = IndexOfReg(registration)) != -1)
             {
                 Registrations[ind] = registration;
             }

@@ -50,6 +50,11 @@ namespace Abdrakov.Container.Registration
                     container.ResolveInjections(p.PropertyType);
                 }
             }
+            // callback
+            if (instance is IRequireInjection reqInj)
+            {
+                reqInj.OnInjectionsReady();
+            }
         }
 
         public bool RequiresInjections(object instance)

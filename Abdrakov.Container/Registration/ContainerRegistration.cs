@@ -15,6 +15,8 @@ namespace Abdrakov.Container.Registration
 
         public object Instance { get; set; }
 
+        public string Name { get; set; }
+
         public Type[] InjectionMembers { get; set; }
 
         public RegistrationType RegistrationType { get; set; }

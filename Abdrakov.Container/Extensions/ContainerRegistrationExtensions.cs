@@ -17,6 +17,7 @@ namespace Abdrakov.Container.Extensions
                 {
                     container.InstanceCreator.ResolveInjections(registration.Instance, container);
                 }
+                if (registration.Instance is IRequireInjection reqInj2) reqInj2.OnResolveReady(); // callback
                 return registration.Instance;
             }
 
@@ -25,6 +26,7 @@ namespace Abdrakov.Container.Extensions
             {
                 registration.Instance = instance;
             }
+            if (instance is IRequireInjection reqInj) reqInj.OnResolveReady(); // callback
             return instance;
         }
 
