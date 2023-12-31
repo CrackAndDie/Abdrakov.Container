@@ -5,9 +5,11 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abdrakov.Container", "Abdrakov.Container\Abdrakov.Container.csproj", "{256BC67D-F2E8-4A20-9181-FA52FDA1A12B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abdrakov.Container.PrismAdapter", "Abdrakov.Container.PrismAdapter\Abdrakov.Container.PrismAdapter.csproj", "{28EE9571-4DA3-4C4A-9FD0-80955EFEF2C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abdrakov.Container.PrismAdapter", "Abdrakov.Container.PrismAdapter\Abdrakov.Container.PrismAdapter.csproj", "{28EE9571-4DA3-4C4A-9FD0-80955EFEF2C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abdrakov.Container.AvaloniaPrismAdapter", "Abdrakov.Container.AvaloniaPrismAdapter\Abdrakov.Container.AvaloniaPrismAdapter.csproj", "{8FF7B422-AF03-4672-A90F-B1FB47FFA9EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abdrakov.Container.AvaloniaPrismAdapter", "Abdrakov.Container.AvaloniaPrismAdapter\Abdrakov.Container.AvaloniaPrismAdapter.csproj", "{8FF7B422-AF03-4672-A90F-B1FB47FFA9EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abdrakov.Container.Tests", "Abdrakov.Container.Tests\Abdrakov.Container.Tests.csproj", "{587FB2E1-092B-44A7-9222-CD5453BDEDA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{8FF7B422-AF03-4672-A90F-B1FB47FFA9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FF7B422-AF03-4672-A90F-B1FB47FFA9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FF7B422-AF03-4672-A90F-B1FB47FFA9EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587FB2E1-092B-44A7-9222-CD5453BDEDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587FB2E1-092B-44A7-9222-CD5453BDEDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587FB2E1-092B-44A7-9222-CD5453BDEDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587FB2E1-092B-44A7-9222-CD5453BDEDA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

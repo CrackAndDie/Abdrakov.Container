@@ -15,5 +15,13 @@ namespace Abdrakov.Container.Extensions
             parametrizedConstructor = parametrizedConstructor ?? mappedToType.GetTypeInfo().DeclaredConstructors.FirstOrDefault();
             return parametrizedConstructor;
         }
+
+        public static object GetDefaultValue(this Type type)
+        {
+            if (type.IsValueType)
+                return Activator.CreateInstance(type);
+
+            return null;
+        }
     }
 }

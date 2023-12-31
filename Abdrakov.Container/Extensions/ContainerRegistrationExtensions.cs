@@ -1,8 +1,6 @@
 ﻿using Abdrakov.Container.Interfaces;
 using Abdrakov.Container.Registration;
 using System;
-using System.Linq;
-using System.Reflection;
 
 namespace Abdrakov.Container.Extensions
 {

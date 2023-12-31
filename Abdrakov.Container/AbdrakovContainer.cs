@@ -83,7 +83,6 @@ namespace Abdrakov.Container
         public IAbdrakovContainer RegisterType(Type registeredType, Type mappedToType, string name, bool isSingleton = false)
         {
             var parametrizedConstructor = mappedToType.GetNormalConstructor();
-            Type[] injectionMembers = parametrizedConstructor.GetParameters().Select(x => x.ParameterType).ToArray();
 
             var registration = new ContainerRegistration()
             {
@@ -91,7 +90,7 @@ namespace Abdrakov.Container
                 MappedToType = mappedToType,
                 Instance = null,
                 RegistrationType = isSingleton ? RegistrationType.Instance : RegistrationType.Type,
-                InjectionMembers = injectionMembers,
+                InjectionMembers = parametrizedConstructor.GetParameters(),
                 Name = name,
             };
             AddOrReplace(registration);
@@ -132,18 +131,23 @@ namespace Abdrakov.Container
                 return Resolve(type, string.Empty, withInjections);
             }
 
+            // check for primitives
+            if (type.IsPrimitive || type == typeof(string))
+            {
+                return type.GetDefaultValue();
+            }
+
             // try to create it by my own
             if (type.IsClass)
             {
                 var parametrizedConstructor = type.GetNormalConstructor();
-                Type[] injectionMembers = parametrizedConstructor.GetParameters().Select(x => x.ParameterType).ToArray();
                 var tempRegistration = new ContainerRegistration()
                 {
                     RegisteredType = type,
                     MappedToType = type,
                     Instance = null,
                     RegistrationType = RegistrationType.Type,
-                    InjectionMembers = injectionMembers,
+                    InjectionMembers = parametrizedConstructor.GetParameters(),
                 };
                 return tempRegistration.GetInstance(this);
             }

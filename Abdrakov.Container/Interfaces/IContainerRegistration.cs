@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Abdrakov.Container.Interfaces
 
         string Name { get; set; }
 
-        Type[] InjectionMembers { get; set; }
+        ParameterInfo[] InjectionMembers { get; set; }
         RegistrationType RegistrationType { get; }
     }
 }

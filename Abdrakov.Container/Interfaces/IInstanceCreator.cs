@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Abdrakov.Container.Interfaces
 {
     public interface IInstanceCreator
     {
         object CreateInstance(IContainerRegistration registration, IAbdrakovContainer container, bool withInjections = true);
-        void ResolveInjections(object instance, IAbdrakovContainer container);
-        bool RequiresInjections(object instance);
+        void ResolveInjections(object instance, IAbdrakovContainer container, Type type = null);
+        bool RequiresInjections(object instance, Type type = null);
     }
 }
