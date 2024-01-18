@@ -93,7 +93,25 @@ private class NormalClass : BaseClass
 {
 }
 ```
-So in this case after *NormalClass* registration and resolve, the *TestClass* property would also be injected.
+So in this case after *NormalClass* registration and resolve, the *TestClass* property would also be injected.  
+
+<h4>Recursive injections:</h4>  
+
+There could be two classes that require injection of each other:
+```c#
+private class FirstClass
+{
+    [Injection]
+    SecondClass InjectedClass { get; set; }
+}
+
+private class SecondClass
+{
+    [Injection]
+    FirstClass InjectedClass { get; set; }
+}
+```
+And this would work as expected!
 
 <h2>Powered by:</h2>  
 
